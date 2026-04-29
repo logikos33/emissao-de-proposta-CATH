@@ -1,36 +1,23 @@
-import Anthropic from '@anthropic-ai/sdk'
+import OpenAI from 'openai'
 import { registrarOrcamentoTool } from './tool-schema'
 
-const MODEL = process.env['ANTHROPIC_MODEL'] ?? 'claude-sonnet-4-6'
+const MODEL = process.env['GLM_MODEL'] ?? 'glm-4-flash'
 const RETRY_DELAYS_MS = [1000, 2000, 4000] as const
 
-let _client: Anthropic | undefined
+let _client: OpenAI | undefined
 
-function getClient(): Anthropic {
-  if (!_client) _client = new Anthropic()
+function getClient(): OpenAI {
+  if (!_client) {
+    _client = new OpenAI({
+      apiKey: process.env['GLM_API_KEY'],
+      baseURL: 'https://open.bigmodel.cn/api/paas/v4/',
+    })
+  }
   return _client
 }
 
 function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms))
-}
-
-function buildUserContent(
-  userPrompt: string,
-  pdfBuffer?: Buffer,
-): Anthropic.MessageParam['content'] {
-  if (!pdfBuffer) return userPrompt
-  return [
-    {
-      type: 'document',
-      source: {
-        type: 'base64',
-        media_type: 'application/pdf' as const,
-        data: pdfBuffer.toString('base64'),
-      },
-    },
-    { type: 'text', text: userPrompt },
-  ] as Anthropic.MessageParam['content']
 }
 
 export async function chamarClaudeExtracao(
@@ -39,25 +26,36 @@ export async function chamarClaudeExtracao(
   pdfBuffer?: Buffer,
 ): Promise<unknown> {
   const client = getClient()
-  const content = buildUserContent(userPrompt, pdfBuffer)
+
+  const userContent: OpenAI.ChatCompletionContentPart[] = pdfBuffer
+    ? [
+        {
+          type: 'text',
+          text: `[PDF em base64 omitido — processe o texto abaixo]\n\n${userPrompt}`,
+        },
+      ]
+    : [{ type: 'text', text: userPrompt }]
+
   let lastError: unknown
 
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
-      const response = await client.messages.create({
+      const response = await client.chat.completions.create({
         model: MODEL,
-        max_tokens: 4096,
-        system: systemPrompt,
-        tools: [registrarOrcamentoTool as unknown as Anthropic.Tool],
-        tool_choice: { type: 'tool', name: 'registrar_orcamento' },
-        messages: [{ role: 'user', content }],
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userContent },
+        ],
+        tools: [registrarOrcamentoTool],
+        tool_choice: { type: 'function', function: { name: 'registrar_orcamento' } },
       })
 
-      const toolBlock = response.content.find((b) => b.type === 'tool_use')
-      if (toolBlock?.type !== 'tool_use') {
-        throw new Error('Nenhum tool_use block na resposta do Claude')
+      const toolCall = response.choices[0]?.message?.tool_calls?.[0]
+      if (!toolCall || toolCall.type !== 'function') {
+        throw new Error('Nenhum tool_call na resposta do GLM')
       }
-      return toolBlock.input
+
+      return JSON.parse(toolCall.function.arguments) as unknown
     } catch (err) {
       lastError = err
       if (attempt < 2) await sleep(RETRY_DELAYS_MS[attempt] ?? 1000)

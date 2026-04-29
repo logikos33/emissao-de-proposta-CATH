@@ -32,7 +32,7 @@ export async function extrairOrcamento(entrada: EntradaExtracao): Promise<Result
   }
 
   const systemPrompt = buildSystemPrompt()
-  const modelo_usado = process.env['ANTHROPIC_MODEL'] ?? 'claude-sonnet-4-6'
+  const modelo_usado = process.env['GLM_MODEL'] ?? 'glm-4-flash'
 
   const outputCru1 = await chamarClaudeExtracao(
     systemPrompt,
