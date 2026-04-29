@@ -7,8 +7,14 @@ export default defineConfig({
     include: ['src/lib/**/*.test.ts'],
     coverage: {
       provider: 'v8',
-      include: ['src/lib/**/*.ts'],
-      exclude: ['src/lib/**/*.test.ts'],
+      include: ['src/lib/pricing/**/*.ts'],
+      exclude: ['src/lib/pricing/**/*.test.ts', 'src/lib/pricing/__tests__/**'],
+      thresholds: {
+        statements: 100,
+        branches: 100,
+        functions: 100,
+        lines: 100,
+      },
     },
   },
 })
