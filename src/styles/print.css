@@ -1,0 +1,22 @@
+@media print {
+  .no-print,
+  nav,
+  .stepper {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+  }
+
+  .proposta-preview {
+    display: block !important;
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+  }
+
+  @page {
+    margin: 2cm;
+  }
+}
