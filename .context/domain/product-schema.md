@@ -64,21 +64,36 @@ export type ItemFinal = z.infer<typeof ItemFinalSchema>
 
 ## CondicaoPagamentoSchema
 
-<!-- CONFIRMAR COM LUCAS: confirmar os valores exatos do enum com a Cath -->
-
 ```typescript
-export const CondicaoPagamentoSchema = z.enum(['a_vista', '30d', '30_60', '30_60_90'])
+export const CondicoesPagamento = [
+  'a_vista',
+  '30_dias',
+  '30_60_dias',
+  '30_60_90_dias',
+  '45_90_dias',
+  'sinal_30_dias',
+  'sinal_30_60_dias',
+  'customizado',
+] as const
+
+export const CondicaoPagamentoSchema = z.enum(CondicoesPagamento)
 
 export type CondicaoPagamento = z.infer<typeof CondicaoPagamentoSchema>
 
 /** Mapa de exibição para o PDF */
 export const CONDICAO_LABEL: Record<CondicaoPagamento, string> = {
   a_vista: 'À vista',
-  '30d': '30 dias',
-  '30_60': '30/60 dias',
-  '30_60_90': '30/60/90 dias',
+  '30_dias': '30 dias',
+  '30_60_dias': '30/60 dias',
+  '30_60_90_dias': '30/60/90 dias',
+  '45_90_dias': '45/90 dias',
+  sinal_30_dias: 'Sinal + 30 dias',
+  sinal_30_60_dias: 'Sinal + 30/60 dias',
+  customizado: 'Personalizado',
 }
 ```
+
+> Quando `condicoes_pagamento === "customizado"`, o campo `condicoes_customizadas: string` é obrigatório na proposta.
 
 ## PropostaSchema
 
