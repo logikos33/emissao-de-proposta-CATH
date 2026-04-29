@@ -1,0 +1,38 @@
+{
+  "fornecedor_principal": null,
+  "data_orcamento": null,
+  "validade": null,
+  "itens": [
+    {
+      "nome": "Parafuso M6 x 30mm",
+      "descricao": null,
+      "quantidade": 100,
+      "unidade": "un",
+      "valor_unitario": 0.45,
+      "fornecedor": null,
+      "observacao": null,
+      "confidence": 0.9
+    },
+    {
+      "nome": "Arruela M6",
+      "descricao": null,
+      "quantidade": 100,
+      "unidade": "un",
+      "valor_unitario": 0.12,
+      "fornecedor": null,
+      "observacao": null,
+      "confidence": 0.88
+    },
+    {
+      "nome": "Porca sextavada M6",
+      "descricao": null,
+      "quantidade": 100,
+      "unidade": "un",
+      "valor_unitario": 0.18,
+      "fornecedor": null,
+      "observacao": null,
+      "confidence": 0.85
+    }
+  ],
+  "observacoes_gerais": null
+}

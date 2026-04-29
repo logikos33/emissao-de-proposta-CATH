@@ -1,0 +1,38 @@
+{
+  "fornecedor_principal": "Distribuidora Elétrica Ltda",
+  "data_orcamento": "2024-03-15",
+  "validade": "2024-04-15",
+  "itens": [
+    {
+      "nome": "Cabo elétrico flexível 2,5mm²",
+      "descricao": "Rolo 100m, cor amarelo/verde",
+      "quantidade": 5,
+      "unidade": "rolo",
+      "valor_unitario": 89.9,
+      "fornecedor": "Distribuidora Elétrica Ltda",
+      "observacao": null,
+      "confidence": 0.97
+    },
+    {
+      "nome": "Disjuntor monofásico 16A",
+      "descricao": null,
+      "quantidade": 20,
+      "unidade": "un",
+      "valor_unitario": 12.5,
+      "fornecedor": "Distribuidora Elétrica Ltda",
+      "observacao": null,
+      "confidence": 0.95
+    },
+    {
+      "nome": "Tomada 2P+T 10A Branca",
+      "descricao": "Padrão NBR 14136",
+      "quantidade": 30,
+      "unidade": "un",
+      "valor_unitario": 6.8,
+      "fornecedor": "Distribuidora Elétrica Ltda",
+      "observacao": null,
+      "confidence": 0.99
+    }
+  ],
+  "observacoes_gerais": "Preços sujeitos a alteração sem aviso prévio"
+}

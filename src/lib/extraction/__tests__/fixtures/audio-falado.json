@@ -1,0 +1,28 @@
+{
+  "fornecedor_principal": "Hidráulica do Zé",
+  "data_orcamento": null,
+  "validade": null,
+  "itens": [
+    {
+      "nome": "Tubo PVC 100mm",
+      "descricao": null,
+      "quantidade": 10,
+      "unidade": "m",
+      "valor_unitario": 18.0,
+      "fornecedor": "Hidráulica do Zé",
+      "observacao": null,
+      "confidence": 0.82
+    },
+    {
+      "nome": "Joelho 90° PVC 100mm",
+      "descricao": null,
+      "quantidade": 4,
+      "unidade": "un",
+      "valor_unitario": 5.5,
+      "fornecedor": "Hidráulica do Zé",
+      "observacao": null,
+      "confidence": 0.75
+    }
+  ],
+  "observacoes_gerais": null
+}
