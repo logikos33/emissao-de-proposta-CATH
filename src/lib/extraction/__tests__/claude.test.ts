@@ -51,6 +51,7 @@ const toolCallResponse = {
 beforeEach(() => {
   vi.clearAllMocks()
   vi.useFakeTimers()
+  process.env['GLM_API_KEY'] = 'testid.testsecret'
 })
 
 afterEach(() => {
