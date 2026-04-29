@@ -8,10 +8,19 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['src/lib/**/*.test.ts'],
+    globals: true,
+    setupFiles: ['src/__tests__/setup.ts'],
+    include: ['src/lib/**/*.test.ts', 'src/__tests__/**/*.test.{ts,tsx}'],
     coverage: {
       provider: 'v8',
-      include: ['src/lib/pricing/**/*.ts', 'src/lib/extraction/**/*.ts'],
+      include: [
+        'src/lib/pricing/**/*.ts',
+        'src/lib/extraction/**/*.ts',
+        'src/lib/utils/currency.ts',
+        'src/lib/stores/proposta.store.ts',
+        'src/lib/api/extract-client.ts',
+        'src/lib/schemas/proposta-form.ts',
+      ],
       exclude: [
         'src/lib/pricing/**/*.test.ts',
         'src/lib/pricing/__tests__/**',
