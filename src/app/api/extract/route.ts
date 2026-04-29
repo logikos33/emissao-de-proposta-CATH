@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-
-export const maxDuration = 60
-export const runtime = 'nodejs'
-export const dynamic = 'force-dynamic'
 import {
   ArquivoMuitoGrandeError,
   ExtracaoInvalidaError,
@@ -11,6 +7,10 @@ import {
   extrairOrcamento,
 } from '@/lib/extraction'
 import type { EntradaExtracao } from '@/lib/extraction'
+
+export const maxDuration = 60
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest): Promise<NextResponse> {
   const contentType = request.headers.get('content-type') ?? ''
@@ -58,6 +58,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (err instanceof ExtracaoInvalidaError || err instanceof TranscricaoError) {
       return NextResponse.json({ error: err.message }, { status: 422 })
     }
-    throw err
+    const message = err instanceof Error ? err.message : 'Erro interno ao processar extração'
+    console.error('[/api/extract]', err)
+    return NextResponse.json({ error: message }, { status: 500 })
   }
 }

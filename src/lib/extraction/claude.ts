@@ -1,7 +1,7 @@
 import Anthropic from '@anthropic-ai/sdk'
 import { registrarOrcamentoTool } from './tool-schema'
 
-const MODEL = process.env['ANTHROPIC_MODEL'] ?? 'claude-sonnet-4-5'
+const MODEL = process.env['ANTHROPIC_MODEL'] ?? 'claude-sonnet-4-6'
 const RETRY_DELAYS_MS = [1000, 2000, 4000] as const
 
 let _client: Anthropic | undefined
